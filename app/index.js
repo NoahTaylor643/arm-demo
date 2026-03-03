@@ -4,18 +4,28 @@ const sql = require("mssql");
 const app = express();
 const port = process.env.PORT || 3000;
 
-const configA = process.env.DB_A_CONNECTION;
-const configB = process.env.DB_B_CONNECTION;
+// Use a single environment variable for DB connection
+const dbConnectionString = process.env.DB_CONNECTION_STRING;
 
-app.get("/products/:db", async (req, res) => {
-  const db = req.params.db === "a" ? configA : configB;
+if (!dbConnectionString) {
+  console.error("ERROR: DB_CONNECTION_STRING environment variable not set!");
+  process.exit(1);
+}
+
+app.get("/products", async (req, res) => {
   try {
-    await sql.connect(db);
+    // Connect to the database
+    await sql.connect(dbConnectionString);
+
+    // Query the Products table
     const result = await sql.query`SELECT * FROM Products`;
+
+    // Return results as JSON
     res.json(result.recordset);
   } catch (err) {
+    console.error("SQL Error:", err);
     res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(port, () => console.log(`API listening on ${port}`));
+app.listen(port, () => console.log(`API listening on port ${port}`));
