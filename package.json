@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node %HOME%\\site\\wwwroot\\arm-demo-main\\index.js"
+    "start": "node ./arm-demo-main/index.js"
   },
   "dependencies": {
     "express": "^4.18.2",
