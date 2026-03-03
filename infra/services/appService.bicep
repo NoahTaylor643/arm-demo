@@ -9,6 +9,7 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
   properties: {
     serverFarmId: appServicePlanName
     siteConfig: {
+      linuxFxVersion: 'NODE|18-lts'
       appSettings: [
         {
           name: 'DB_CONNECTION_STRING'
