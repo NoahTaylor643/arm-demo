@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Products Query</title>
+  </head>
+  <body>
+    <h1>Query Products</h1>
+    <button onclick="fetchProducts()">Get Products</button>
+    <pre id="output"></pre>
+    <script>
+      async function fetchProducts() {
+        const res = await fetch("/products");
+        const data = await res.json();
+        document.getElementById("output").textContent = JSON.stringify(
+          data,
+          null,
+          2,
+        );
+      }
+    </script>
+  </body>
+</html>

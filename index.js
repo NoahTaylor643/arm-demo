@@ -1,6 +1,8 @@
 const express = require("express");
 const sql = require("mssql");
 
+const express = require("express");
+const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -11,6 +13,9 @@ if (!dbConnectionString) {
   console.error("ERROR: DB_CONNECTION_STRING environment variable not set!");
   process.exit(1);
 }
+
+// Serve static files from "public"
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/products", async (req, res) => {
   try {
